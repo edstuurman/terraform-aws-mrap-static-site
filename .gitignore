@@ -1,0 +1,17 @@
+# Local Terraform directories & lockfiles
+.terraform/
+.terraform.lock.hcl
+
+# Terraform state & lock files
+*.tfstate
+*.tfstate.*
+*.tflock
+
+# Variable files (may contain environment-specific values)
+*.tfvars
+
+# Crash logs
+crash.log
+
+# macOS metadata
+.DS_Store

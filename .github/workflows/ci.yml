@@ -1,0 +1,39 @@
+name: Terraform CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Format & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.2"
+
+      - name: Check Terraform formatting
+        run: terraform fmt -check -recursive
+
+      - name: Validate root module
+        working-directory: .
+        run: terraform init -backend=false && terraform validate
+
+      - name: Validate minimal example
+        working-directory: examples/minimal
+        run: terraform init -backend=false && terraform validate
+
+      - name: Validate complete example
+        working-directory: examples/complete
+        run: terraform init -backend=false && terraform validate
